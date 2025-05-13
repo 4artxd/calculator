@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#222222">
+<link rel="icon" href="icon-192.png" type="image/png">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Simples</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculadora {
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 320px;
+    }
+    .display {
+      background: #000;
+      color: #0f0;
+      font-size: 2.2em;
+      padding: 15px;
+      text-align: right;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      overflow-x: auto;
+    }
+    .botoes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #555;
+    }
+    button:active {
+      background: #777;
+    }
+    @media (max-width: 400px) {
+      .calculadora {
+        padding: 15px;
+        max-width: 95%;
+      }
+      .display {
+        font-size: 2em;
+        padding: 10px;
+      }
+      button {
+        padding: 18px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculadora">
+    <div class="display" id="display">0</div>
+    <div class="botoes">
+      <button onclick="limpar()">C</button>
+      <button onclick="apagarUltimo()">⌫</button>
+      <button onclick="adicionar('(')">(</button>
+      <button onclick="adicionar(')')">)</button>
+
+      <button onclick="adicionar('7')">7</button>
+      <button onclick="adicionar('8')">8</button>
+      <button onclick="adicionar('9')">9</button>
+      <button onclick="adicionar('/')">÷</button>
+
+      <button onclick="adicionar('4')">4</button>
+      <button onclick="adicionar('5')">5</button>
+      <button onclick="adicionar('6')">6</button>
+      <button onclick="adicionar('*')">×</button>
+
+      <button onclick="adicionar('1')">1</button>
+      <button onclick="adicionar('2')">2</button>
+      <button onclick="adicionar('3')">3</button>
+      <button onclick="adicionar('-')">−</button>
+
+      <button onclick="adicionar('0')">0</button>
+      <button onclick="adicionar('.')">.</button>
+      <button onclick="calcular()" style="grid-column: span 2; background: #0a0;">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function adicionar(valor) {
+      if (display.innerText === '0') {
+        display.innerText = valor;
+      } else {
+        display.innerText += valor;
+      }
+    }
+
+    function limpar() {
+      display.innerText = '0';
+    }
+
+    function apagarUltimo() {
+      if (display.innerText.length > 1) {
+        display.innerText = display.innerText.slice(0, -1);
+      } else {
+        display.innerText = '0';
+      }
+    }
+
+    function calcular() {
+      try {
+        display.innerText = eval(display.innerText);
+      } catch (e) {
+        display.innerText = 'Erro';
+      }
+    }
+    
+     if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registrado!', reg))
+      .catch(err => console.error('Erro ao registrar o Service Worker', err));}
+
+  </script>
+
+</body>
+</html>
